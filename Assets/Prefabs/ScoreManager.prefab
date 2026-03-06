@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4021717604279840854}
   - component: {fileID: 2466890674740357368}
+  - component: {fileID: 293566311762222908}
   m_Layer: 0
   m_Name: ScoreManager
   m_TagString: Untagged
@@ -45,3 +46,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   score: 0
+  scoreUI: {fileID: 0}
+  popupPrefab: {fileID: 3878341204614806044, guid: 0e5c49a99660fd642b2a4070a12fe179, type: 3}
+  globalHitParticlePrefab: {fileID: 0}
+--- !u!114 &293566311762222908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1543102188051688837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c5d6d6e45c3db340b90f7aa3e1d10c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MultiplierSystem
+  maxHeat: 50
+  heatPerPoint: 2
+  heatDecayPerSecond: 0.1
+  maxMultiplier: 5
+  heatPerLevel: 10
+  ui: {fileID: 7390826716412264379, guid: 5b09ca4cdbe6bb3408548c047c7c8fcb, type: 3}
