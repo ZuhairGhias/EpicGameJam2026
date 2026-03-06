@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 4754050394959702976}
   - component: {fileID: 7633563095447802427}
   - component: {fileID: 2959323880493045966}
+  - component: {fileID: 7349611046564805405}
   m_Layer: 3
   m_Name: BIrd
   m_TagString: Player
@@ -110,7 +111,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -123,7 +124,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3940879004684879141}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61a70d49d8aa6bd4ba0be52cd2bf531c, type: 3}
   m_Name: 
@@ -291,3 +292,44 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &7349611046564805405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3940879004684879141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 689b7233d1dc5c64cbba8804e740b471, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BirdGlideController
+  flapUpImpulse: 0.7
+  flapForwardImpulse: 2
+  flapCooldown: 0.5
+  forwardThrust: 1
+  diveForwardBonus: 2
+  maxForwardSpeed: 5
+  extraFallGravity: 2.5
+  extraRiseGravity: 1
+  maxUpSpeed: 2
+  maxDownSpeed: 5
+  baseLinearDamping: 0.2
+  glideLinearDamping: 0.55
+  lift: 4.5
+  minLift: 0
+  maxLift: 2
+  minimumForwardBias: 2
+  minTurnRedirectStrength: 4
+  maxTurnRedirectStrength: 14
+  minSidewaysDamping: 6
+  maxSidewaysDamping: 22
+  pitchSpeed: 95
+  rollSpeed: 140
+  minYawSpeedFromRoll: 40
+  maxYawSpeedFromRoll: 95
+  pitchLimit: 40
+  rollLimit: 50
+  rotationSmoothing: 12
+  pitchReturnSpeed: 40
+  rollReturnSpeed: 80

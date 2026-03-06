@@ -61,4 +61,18 @@ public class BirdController : MonoBehaviour
         CurrentVelocity = (rb.position - lastPos) / Time.fixedDeltaTime;
         lastPos = rb.position;
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Obstacle")
+        {
+            ResetGame();
+        }
+    }
+
+    void ResetGame()
+    {
+        transform.position = new Vector3(0f, 4.25f, 0f);
+        transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+    }
 }
