@@ -127,6 +127,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   lifeSeconds: 5
+  splatterDecalPrefab: {fileID: 7878028481173529375, guid: 886948aad0d22a34ab9082282754d326, type: 3}
+  splatterParticlesPrefab: {fileID: 2843494671706434766, guid: 722cce7bb461f7d4d97b595fa99196ea, type: 3}
+  decalNormalOffset: 0.01
+  decalLifetime: 10
+  parentDecalToHitObject: 1
+  decalScaleRange: {x: 0.9, y: 1.2}
 --- !u!54 &6570001669348222080
 Rigidbody:
   m_ObjectHideFlags: 0
