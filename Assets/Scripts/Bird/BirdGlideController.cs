@@ -66,8 +66,12 @@ public class BirdGlideController : MonoBehaviour
     private float targetRoll;
     private float targetYaw;
 
+     private Animator animator;
+
     void Awake()
     {
+        animator = GetComponentInChildren<Animator>();
+
         rb = GetComponent<Rigidbody>();
         rb.useGravity = true;
         rb.linearDamping = baseLinearDamping;
@@ -163,6 +167,8 @@ public class BirdGlideController : MonoBehaviour
 
         Vector3 flapForce = (Vector3.up * flapUpImpulse) + (transform.forward * flapForwardImpulse);
         rb.AddForce(flapForce, ForceMode.Impulse);
+
+        animator.Play("Flap", 0, 0f);
     }
 
     void ApplyRotation()
