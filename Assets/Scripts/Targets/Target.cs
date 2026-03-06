@@ -51,10 +51,13 @@ public class Target : MonoBehaviour
             AudioSource.PlayClipAtPoint(hitSfx, hitPoint);
         }
 
-        // Notify score system (if present)
         if (ScoreManager.Instance != null)
         {
-            ScoreManager.Instance.AddScore(points, targetType);
+            ScoreManager.Instance.RegisterHit(this, this.transform.position);
+        }
+        else
+        {
+            Debug.LogError("ScoreManager.Instance is null. Add a ScoreManager to the scene.");
         }
 
         // Optional: destroy or temporarily disable collision
