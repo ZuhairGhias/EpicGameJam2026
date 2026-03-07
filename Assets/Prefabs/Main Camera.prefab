@@ -163,7 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc390b41a795e9c4eb7a09d005b3c933, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraGlideFollow
-  backDistance: 2.5
-  height: 6.8
+  backDistance: 2.63
+  height: 2.14
   sideOffset: 0
-  followSmooth: 8
+  followSmooth: 20.52
