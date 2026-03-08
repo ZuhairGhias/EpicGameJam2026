@@ -14,7 +14,7 @@ public class BirdGlideController : MonoBehaviour
     public float flapUpImpulse = 6.5f;
     public float flapForwardImpulse = 2.0f;
 
-    [Tooltip("Seconds to wait after pressing Space before applying the flap impulse.")]
+    [Tooltip("Seconds to wait after pressing Left Shift before applying the flap impulse.")]
     public float flapDelay = 0.10f;
 
     public float flapCooldown = 0.10f;
@@ -237,7 +237,7 @@ public class BirdGlideController : MonoBehaviour
         float rollFraction = targetRoll / rollLimit;
         targetYaw -= rollFraction * yawSpeedFromRoll * Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.LeftShift))
             QueueFlap();
     }
 

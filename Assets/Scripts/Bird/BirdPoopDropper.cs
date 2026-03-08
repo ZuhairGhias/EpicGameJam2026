@@ -7,6 +7,7 @@ public class BirdPoopDropper : MonoBehaviour
     public Rigidbody poopPrefab;
     public Transform spawnPoint;
     public LineRenderer line;
+    public Transform landingMarker;
     public AudioClip dropSfx;
 
     [Header("Trajectory / Feel")]
@@ -17,7 +18,13 @@ public class BirdPoopDropper : MonoBehaviour
     public float timeStep = 0.06f;
 
     [Header("Preview collision")]
+    public bool showTrajectoryPreview = true;
+    public bool showLandingMarker = true;
     public LayerMask previewCollideMask;
+    public float landingMarkerNormalOffset = 0.02f;
+    public LayerMask landingMarkerGroundMask = ~0;
+    public float landingMarkerGroundProbeHeight = 30f;
+    public float landingMarkerGroundProbeDistance = 100f;
 
     private BirdGlideController bird;
     private Collider[] playerColliders;
@@ -32,18 +39,28 @@ public class BirdPoopDropper : MonoBehaviour
 
         if (line != null)
         {
-            line.enabled = true;
+            line.enabled = showTrajectoryPreview;
             line.useWorldSpace = true;
             line.positionCount = segments;
         }
+
+        if (landingMarker != null)
+            landingMarker.gameObject.SetActive(false);
     }
 
     void Update()
     {
         if (line != null)
-            DrawTrajectory();
+        {
+            line.enabled = showTrajectoryPreview;
 
-        if (Input.GetMouseButtonDown(0) && Time.time >= nextAllowedDropTime)
+            if (showTrajectoryPreview)
+                DrawTrajectory();
+            else if (landingMarker != null && landingMarker.gameObject.activeSelf)
+                landingMarker.gameObject.SetActive(false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time >= nextAllowedDropTime)
             Drop();
     }
 
@@ -91,6 +108,9 @@ public class BirdPoopDropper : MonoBehaviour
         Vector3 g = Physics.gravity;
 
         Vector3 prev = p0;
+        bool foundHit = false;
+        Vector3 hitPoint = Vector3.zero;
+        Vector3 hitNormal = Vector3.up;
 
         for (int i = 0; i < segments; i++)
         {
@@ -108,6 +128,11 @@ public class BirdPoopDropper : MonoBehaviour
                     p = hit.point;
                     line.SetPosition(i, p);
                     for (int j = i + 1; j < segments; j++) line.SetPosition(j, p);
+
+                    foundHit = true;
+                    hitPoint = hit.point;
+                    hitNormal = hit.normal;
+                    UpdateLandingMarker(foundHit, hitPoint, hitNormal);
                     return;
                 }
             }
@@ -115,6 +140,37 @@ public class BirdPoopDropper : MonoBehaviour
             line.SetPosition(i, p);
             prev = p;
         }
+
+        UpdateLandingMarker(foundHit, hitPoint, hitNormal);
+    }
+
+    void UpdateLandingMarker(bool foundHit, Vector3 hitPoint, Vector3 hitNormal)
+    {
+        if (landingMarker == null) return;
+
+        bool shouldShow = showLandingMarker && showTrajectoryPreview && foundHit;
+        if (landingMarker.gameObject.activeSelf != shouldShow)
+            landingMarker.gameObject.SetActive(shouldShow);
+
+        if (!shouldShow) return;
+
+        Vector3 markerPoint = hitPoint;
+        Vector3 markerNormal = hitNormal;
+
+        Vector3 probeStart = hitPoint + Vector3.up * landingMarkerGroundProbeHeight;
+        if (Physics.Raycast(
+            probeStart,
+            Vector3.down,
+            out RaycastHit groundHit,
+            landingMarkerGroundProbeDistance,
+            landingMarkerGroundMask))
+        {
+            markerPoint = groundHit.point;
+            markerNormal = groundHit.normal;
+        }
+
+        landingMarker.position = markerPoint + markerNormal * landingMarkerNormalOffset;
+        landingMarker.rotation = Quaternion.LookRotation(-markerNormal);
     }
 }
 
