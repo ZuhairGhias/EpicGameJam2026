@@ -1,50 +1,37 @@
 using UnityEngine;
 
-[RequireComponent(typeof(MultiplierSystem))]
 public class ScoreManager : MonoBehaviour
 {
-    public static ScoreManager Instance { get; private set; }
+    [Header("Heat")]
+    public float maxHeat = 50f;
+    public float heatPerPoint = 1f;
+    public float heatDecayPerSecond = 0.5f;
 
-    [Header("Score")]
-    public int score;
+    [Header("Multiplier Levels")]
+    public int maxMultiplier = 5;
+    public float heatPerLevel = 10f;
 
-    [Header("Required UI")]
-    public ScoreUI scoreUI;
-
-    private MultiplierSystem multiplierSystem;
+    [Header("UI")]
+    public MultiplierUI multiplierUI;
 
     [Header("Hit FX (optional)")]
     public ScorePopup popupPrefab;
     public GameObject globalHitParticlePrefab;
+
+    public float Heat { get; private set; }
+    public int Multiplier { get; private set; } = 1;
 
     private bool warnedPopup;
     private bool warnedParticles;
 
     void Awake()
     {
-        if (Instance != null && Instance != this)
+        if (multiplierUI == null)
+            multiplierUI = FindFirstObjectByType<MultiplierUI>();
+
+        if (multiplierUI == null)
         {
-            Debug.LogError("Multiple ScoreManager instances detected. There must be exactly one.");
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
-
-        if (scoreUI == null)
-        {
-            Debug.LogError("ScoreManager: scoreUI reference is REQUIRED but not assigned.");
-            enabled = false;
-            return;
-        }
-
-        // Auto-wire required dependency if not assigned
-        if (multiplierSystem == null)
-            multiplierSystem = GetComponent<MultiplierSystem>();
-
-        if (multiplierSystem == null)
-        {
-            Debug.LogError("ScoreManager: MultiplierSystem is REQUIRED on the same GameObject but was not found.");
+            Debug.LogError("ScoreManager: Could not find MultiplierUI in the scene. Disabling ScoreManager.", this);
             enabled = false;
             return;
         }
@@ -64,32 +51,32 @@ public class ScoreManager : MonoBehaviour
             Debug.LogWarning("ScoreManager: globalHitParticlePrefab not set. Hit particles disabled.");
             warnedParticles = true;
         }
-
-        scoreUI.SetScore(score);
     }
 
-    public void RegisterHit(Target target, Vector3 hitPoint)
+    void Update()
     {
-        if (!enabled) return;
+        Heat = Mathf.Max(0f, Heat - heatDecayPerSecond * Time.deltaTime);
+        RecomputeMultiplier();
+        UpdateUI();
+    }
+
+    public int RegisterHit(Target target, Vector3 hitPoint)
+    {
+        if (!enabled) return 0;
 
         if (target == null)
         {
             Debug.LogError("ScoreManager.RegisterHit called with null target.");
-            return;
+            return 0;
         }
 
         int basePoints = target.points;
 
-        // Heat/multiplier progression
-        multiplierSystem.AddHeatFromPoints(basePoints);
+        AddHeatFromPoints(basePoints);
+        int awarded = basePoints * Multiplier;
 
-        int multiplier = multiplierSystem.Multiplier;
-        int awarded = basePoints * multiplier;
-
-        score += awarded;
-        scoreUI.SetScore(score);
-
-        SpawnScoreFx(hitPoint, awarded, multiplier);
+        SpawnScoreFx(hitPoint, awarded, Multiplier);
+        return awarded;
     }
 
     void SpawnScoreFx(Vector3 pos, int awardedPoints, int multiplier)
@@ -107,5 +94,39 @@ public class ScoreManager : MonoBehaviour
             Color c = (multiplier >= 4) ? new Color(1f, 0.85f, 0.2f) : Color.white;
             popup.Init($"{awardedPoints}", c);
         }
+    }
+
+    void AddHeatFromPoints(int basePoints)
+    {
+        Heat = Mathf.Clamp(Heat + basePoints * heatPerPoint, 0f, maxHeat);
+        RecomputeMultiplier();
+        UpdateUI();
+    }
+
+    void RecomputeMultiplier()
+    {
+        int newMult = 1 + Mathf.FloorToInt(Heat / heatPerLevel);
+        Multiplier = Mathf.Clamp(newMult, 1, maxMultiplier);
+    }
+
+    void UpdateUI()
+    {
+        if (multiplierUI == null) return;
+
+        float currentLevelMinHeat = (Multiplier - 1) * heatPerLevel;
+        float nextLevelHeat = Mathf.Min(Multiplier * heatPerLevel, maxHeat);
+        float heatIntoLevel = Mathf.Clamp(Heat - currentLevelMinHeat, 0f, heatPerLevel);
+        float heatNeededForNextLevel = (Multiplier >= maxMultiplier) ? heatPerLevel : (nextLevelHeat - currentLevelMinHeat);
+
+        float barMax = heatNeededForNextLevel;
+        float barValue = heatIntoLevel;
+
+        if (Multiplier >= maxMultiplier)
+        {
+            barMax = heatPerLevel;
+            barValue = heatPerLevel;
+        }
+
+        multiplierUI.SetHeatAndMultiplier(barValue, barMax, Multiplier);
     }
 }

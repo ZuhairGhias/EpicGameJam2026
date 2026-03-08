@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 
+[RequireComponent(typeof(ScoreManager))]
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -11,7 +12,6 @@ public class GameManager : MonoBehaviour
     public BirdGlideController bird;
 
     [Header("Score")]
-    public TMP_Text scoreText;
     public int currentScore = 0;
 
     [Header("UI Panels")]
@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     private bool isGameOver = false;
     private bool hasGameStarted = false;
     private const int MaxSavedScores = 5;
+    private ScoreManager scoreManager;
 
     private void Awake()
     {
@@ -39,6 +40,16 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
+        scoreManager = GetComponent<ScoreManager>();
+
+        if (scoreManager == null)
+        {
+            Debug.LogError("GameManager requires a ScoreManager component on the same GameObject.");
+            enabled = false;
+            return;
+        }
+
     }
 
     private void Start()
@@ -114,13 +125,14 @@ public class GameManager : MonoBehaviour
         if (!hasGameStarted || isGameOver) return;
         if (target == null) return;
 
-        AddScore(target.points);
+        int awarded = scoreManager != null ? scoreManager.RegisterHit(target, hitPosition) : target.points;
+        AddScore(awarded);
     }
 
     private void UpdateScoreText()
     {
-        if (scoreText != null)
-            scoreText.text = "Score: " + currentScore;
+        if (scoreManager != null && scoreManager.multiplierUI != null)
+            scoreManager.multiplierUI.SetScore(currentScore);
     }
 
     public void EndGame()

@@ -2,11 +2,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+[RequireComponent(typeof(AudioSource))]
 public class MultiplierUI : MonoBehaviour
 {
     [Header("UI")]
     public Slider heatBar;
     public TMP_Text multiplierText;
+    public TMP_Text scoreText;
 
     [Header("Animation")]
     public float punchScale = 1.25f;
@@ -18,15 +20,17 @@ public class MultiplierUI : MonoBehaviour
     public Color levelDownColor = new Color(1f, 0.4f, 0.4f);
 
     [Header("Audio")]
-    public AudioSource audioSource;
     public AudioClip levelUpSfx;
     public AudioClip levelDownSfx;
 
     private int lastMultiplier = 1;
     private Vector3 baseScale;
+    private AudioSource audioSource;
 
     void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
+
         // Required references
         if (heatBar == null)
         {
@@ -43,9 +47,6 @@ public class MultiplierUI : MonoBehaviour
         }
 
         // Optional references
-        if (audioSource == null)
-            Debug.LogWarning("MultiplierUI: audioSource not assigned. Multiplier sounds will not play.", this);
-
         if (levelUpSfx == null)
             Debug.LogWarning("MultiplierUI: levelUpSfx not assigned.", this);
 
@@ -75,6 +76,12 @@ public class MultiplierUI : MonoBehaviour
 
             lastMultiplier = multiplier;
         }
+    }
+
+    public void SetScore(int score)
+    {
+        if (scoreText != null)
+            scoreText.text = $"Score: {score}";
     }
 
     void OnLevelUp()

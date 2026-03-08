@@ -623,18 +623,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 293566311762222908, guid: 065e06fbd60aee84a944facbf1c25396, type: 3}
-      propertyPath: ui
-      value: 
-      objectReference: {fileID: 1209079766}
     - target: {fileID: 1543102188051688837, guid: 065e06fbd60aee84a944facbf1c25396, type: 3}
       propertyPath: m_Name
       value: ScoreManager
       objectReference: {fileID: 0}
-    - target: {fileID: 2466890674740357368, guid: 065e06fbd60aee84a944facbf1c25396, type: 3}
-      propertyPath: scoreUI
-      value: 
-      objectReference: {fileID: 770519763}
     - target: {fileID: 4021717604279840854, guid: 065e06fbd60aee84a944facbf1c25396, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.70041

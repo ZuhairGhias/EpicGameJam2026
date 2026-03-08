@@ -1,11 +1,13 @@
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class BirdPoopDropper : MonoBehaviour
 {
     [Header("References")]
     public Rigidbody poopPrefab;
     public Transform spawnPoint;
     public LineRenderer line;
+    public AudioClip dropSfx;
 
     [Header("Trajectory / Feel")]
     public float extraDownSpeed = 0f;     // laxatives can raise this (e.g. 8�15)
@@ -18,11 +20,13 @@ public class BirdPoopDropper : MonoBehaviour
 
     private BirdGlideController bird;
     private Collider[] playerColliders;
+    private AudioSource dropAudioSource;
 
     void Awake()
     {
         bird = GetComponent<BirdGlideController>();
         playerColliders = GetComponentsInChildren<Collider>();
+        dropAudioSource = GetComponent<AudioSource>();
 
         if (line != null)
         {
@@ -67,6 +71,9 @@ public class BirdPoopDropper : MonoBehaviour
                 if (c != null) Physics.IgnoreCollision(poopCol, c);
             }
         }
+
+        if (dropAudioSource != null && dropSfx != null)
+            dropAudioSource.PlayOneShot(dropSfx);
     }
 
     void DrawTrajectory()
