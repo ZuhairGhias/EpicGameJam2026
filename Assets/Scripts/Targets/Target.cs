@@ -13,7 +13,7 @@ public class Target : MonoBehaviour
 
     [Header("Target Settings")]
     public TargetType targetType = TargetType.Pedestrian;
-    public int points = 2;
+    public int points = 0;
 
     [Header("Hit Reaction")]
     public bool destroyOnHit = false;
@@ -51,13 +51,13 @@ public class Target : MonoBehaviour
             AudioSource.PlayClipAtPoint(hitSfx, hitPoint);
         }
 
-        if (ScoreManager.Instance != null)
+        if (GameManager.Instance != null)
         {
-            ScoreManager.Instance.RegisterHit(this, this.transform.position);
+            GameManager.Instance.RegisterHit(this, this.transform.position);
         }
         else
         {
-            Debug.LogError("ScoreManager.Instance is null. Add a ScoreManager to the scene.");
+            Debug.LogError("GameManager.Instance is null. Add a GameManager to the scene.");
         }
 
         // Optional: destroy or temporarily disable collision

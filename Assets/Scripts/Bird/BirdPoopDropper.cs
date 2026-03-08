@@ -8,7 +8,7 @@ public class BirdPoopDropper : MonoBehaviour
     public LineRenderer line;
 
     [Header("Trajectory / Feel")]
-    public float extraDownSpeed = 0f;     // laxatives can raise this (e.g. 8–15)
+    public float extraDownSpeed = 0f;     // laxatives can raise this (e.g. 8ï¿½15)
     public float inheritMultiplier = 1f;  // 1 = full inherit
     public int segments = 25;
     public float timeStep = 0.06f;
@@ -16,12 +16,12 @@ public class BirdPoopDropper : MonoBehaviour
     [Header("Preview collision")]
     public LayerMask previewCollideMask;
 
-    private BirdController bird;
+    private BirdGlideController bird;
     private Collider[] playerColliders;
 
     void Awake()
     {
-        bird = GetComponent<BirdController>();
+        bird = GetComponent<BirdGlideController>();
         playerColliders = GetComponentsInChildren<Collider>();
 
         if (line != null)
@@ -37,7 +37,7 @@ public class BirdPoopDropper : MonoBehaviour
         if (line != null)
             DrawTrajectory();
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetMouseButtonDown(0))
             Drop();
     }
 
