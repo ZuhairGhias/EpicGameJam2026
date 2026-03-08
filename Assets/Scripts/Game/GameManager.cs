@@ -12,10 +12,7 @@ public class GameManager : MonoBehaviour
     public BirdGlideController bird;
 
     [Header("Score")]
-    public TMP_Text scoreText;
-    public MultiplierUI multiplierUI;
     public int currentScore = 0;
-    public ScoreManager scoreManager;
 
     [Header("UI Panels")]
     public GameObject mainMenuUI;
@@ -30,6 +27,7 @@ public class GameManager : MonoBehaviour
     private bool isGameOver = false;
     private bool hasGameStarted = false;
     private const int MaxSavedScores = 5;
+    private ScoreManager scoreManager;
 
     private void Awake()
     {
@@ -43,8 +41,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        if (scoreManager == null)
-            scoreManager = GetComponent<ScoreManager>();
+        scoreManager = GetComponent<ScoreManager>();
 
         if (scoreManager == null)
         {
@@ -53,11 +50,6 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        if (multiplierUI == null && scoreManager != null)
-            multiplierUI = scoreManager.multiplierUI;
-
-        if (multiplierUI == null)
-            multiplierUI = FindFirstObjectByType<MultiplierUI>();
     }
 
     private void Start()
@@ -139,10 +131,8 @@ public class GameManager : MonoBehaviour
 
     private void UpdateScoreText()
     {
-        if (multiplierUI != null)
-            multiplierUI.SetScore(currentScore);
-        else if (scoreText != null)
-            scoreText.text = "Score: " + currentScore;
+        if (scoreManager != null && scoreManager.multiplierUI != null)
+            scoreManager.multiplierUI.SetScore(currentScore);
     }
 
     public void EndGame()

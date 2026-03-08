@@ -5,6 +5,10 @@ public class PoopProjectile : MonoBehaviour
     [Header("Lifetime")]
     public float lifeSeconds = 5f;
 
+    [Header("Audio")]
+    public AudioClip targetHitSfx;
+    [Range(0f, 1f)] public float targetHitSfxVolume = 1f;
+
     [Header("Impact FX")]
     public GameObject splatterDecalPrefab;
     public ParticleSystem splatterParticlesPrefab;
@@ -33,6 +37,7 @@ public class PoopProjectile : MonoBehaviour
         if (t != null)
         {
             t.Hit(cp.point, cp.normal);
+            PlayTargetHitSfx(cp.point);
         }
 
         SpawnImpactFx(collision.collider, cp.point, cp.normal);
@@ -52,7 +57,14 @@ public class PoopProjectile : MonoBehaviour
 
             Quaternion particleRot = Quaternion.LookRotation(particleForward);
             ParticleSystem ps = Instantiate(splatterParticlesPrefab, hitPoint, particleRot);
-            ps.Play();
+            var main = ps.main;
+            main.loop = false;
+            main.stopAction = ParticleSystemStopAction.Destroy;
+
+            float particleLife = (main.startDelay.constantMax + main.duration + main.startLifetime.constantMax) / Mathf.Max(main.simulationSpeed, 0.0001f);
+            Destroy(ps.gameObject, particleLife + 0.25f);
+
+            ps.Play(true);
         }
 
         if (splatterDecalPrefab != null)
@@ -69,5 +81,11 @@ public class PoopProjectile : MonoBehaviour
             if (decalLifetime > 0f)
                 Destroy(decal, decalLifetime);
         }
+    }
+
+    void PlayTargetHitSfx(Vector3 worldPoint)
+    {
+        if (targetHitSfx != null && targetHitSfxVolume > 0f)
+            AudioSource.PlayClipAtPoint(targetHitSfx, worldPoint, targetHitSfxVolume);
     }
 }

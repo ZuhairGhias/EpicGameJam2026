@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 
+[RequireComponent(typeof(AudioSource))]
 public class ListeningModeController : MonoBehaviour
 {
     [Header("Input")]
@@ -26,7 +27,6 @@ public class ListeningModeController : MonoBehaviour
     public Sprite targetCursorSprite;      // green
 
     [Header("Audio")]
-    public AudioSource audioSource;
     public AudioClip enterListeningClip;
     public AudioClip exitListeningClip;
     public AudioClip nonTargetClip;
@@ -54,9 +54,15 @@ public class ListeningModeController : MonoBehaviour
     private bool isListening = false;
     private float lastNonTargetSoundTime = -999f;
     private ConversationTarget currentTarget;
+    private AudioSource audioSource;
 
     private Coroutine typingCoroutine;
     private string currentDisplayedFullText = "";
+
+    void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     void Start()
     {

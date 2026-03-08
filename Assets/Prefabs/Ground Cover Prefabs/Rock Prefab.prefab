@@ -1134,8 +1134,6 @@ GameObject:
   - component: {fileID: 1546937524824774810}
   - component: {fileID: 3557726860574983567}
   - component: {fileID: 5744339612884798677}
-  - component: {fileID: 2489284207528088431}
-  - component: {fileID: 1190175188211131438}
   m_Layer: 8
   m_Name: Rock Prefab
   m_TagString: Obstacle
@@ -1216,45 +1214,3 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2489284207528088431
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7865702997624220898}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.66, y: 0.45, z: 0.6}
-  m_Center: {x: -0.4, y: 0.2, z: -0.39}
---- !u!65 &1190175188211131438
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7865702997624220898}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: -0.49, y: 0.35, z: 0.4}
-  m_Center: {x: -0.38, y: 0.54, z: -0.36}
