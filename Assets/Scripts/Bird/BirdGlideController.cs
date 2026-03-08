@@ -486,13 +486,17 @@ public class BirdGlideController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Obstacle"))
+        if (other.CompareTag("Obstacle") | other.CompareTag("Target"))
         {
             HandleDeath();
         }
         else if (other.CompareTag("Collectable"))
         {
             Destroy(other.gameObject);
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.AddScore(50);
+            }
         }
     }
 
