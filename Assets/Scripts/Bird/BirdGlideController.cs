@@ -101,6 +101,8 @@ public class BirdGlideController : MonoBehaviour
     private bool hasStarted = false;
     private bool isDead = false;
 
+    private AnimatorStateInfo stateInfo;
+
     void Awake()
     {
         animator = GetComponentInChildren<Animator>();
@@ -168,11 +170,60 @@ public class BirdGlideController : MonoBehaviour
         bool pitching = false;
         bool rolling = false;
 
-        if (Input.GetKey(KeyCode.W)) { targetPitch += pitchSpeed * Time.deltaTime; pitching = true; }
-        if (Input.GetKey(KeyCode.S)) { targetPitch -= pitchSpeed * Time.deltaTime; pitching = true; }
+        if (Input.GetKey(KeyCode.W)) 
+        { 
+            targetPitch += pitchSpeed * Time.deltaTime; pitching = true; 
+        }
+        if (Input.GetKey(KeyCode.S)) 
+        { 
+            targetPitch -= pitchSpeed * Time.deltaTime; pitching = true; 
+        
+            if (animator != null)
+            {
 
-        if (Input.GetKey(KeyCode.A)) { targetRoll += rollSpeed * Time.deltaTime; rolling = true; }
-        if (Input.GetKey(KeyCode.D)) { targetRoll -= rollSpeed * Time.deltaTime; rolling = true; }
+                stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+                if (stateInfo.IsName("Do Nothing"))
+                {
+                    animator.speed=2f;
+                    animator.Play("Flap", 0, 0f);
+                }
+            }
+        }
+
+        if (Input.GetKey(KeyCode.A)) 
+        { 
+            targetRoll += rollSpeed * Time.deltaTime; rolling = true; 
+
+            if (animator != null)
+            {
+
+                stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+                if (stateInfo.IsName("Do Nothing"))
+                {
+                    animator.speed=2f;
+                    animator.Play("Flap", 0, 0f);
+                }
+            }
+        }
+
+        if (Input.GetKey(KeyCode.D)) 
+        { 
+            targetRoll -= rollSpeed * Time.deltaTime; rolling = true; 
+
+            if (animator != null)
+            {
+
+                stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+                if (stateInfo.IsName("Do Nothing"))
+                {
+                    animator.speed=2f;
+                    animator.Play("Flap", 0, 0f);
+                }
+            }
+        }
 
         if (!pitching) targetPitch = Mathf.MoveTowards(targetPitch, 0f, pitchReturnSpeed * Time.deltaTime);
         if (!rolling) targetRoll = Mathf.MoveTowards(targetRoll, 0f, rollReturnSpeed * Time.deltaTime);
@@ -200,8 +251,18 @@ public class BirdGlideController : MonoBehaviour
         {
             flapQueued = true;
             flapFireTime = fireTime;
+
             if (animator != null)
-                animator.Play("Flap", 0, 0f);
+            {
+
+                stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+                if (stateInfo.IsName("Do Nothing"))
+                {
+                    animator.speed=1f;
+                    animator.Play("Flap", 0, 0f);
+                }
+            }
         }
         else
         {
@@ -428,6 +489,10 @@ public class BirdGlideController : MonoBehaviour
         if (other.CompareTag("Obstacle"))
         {
             HandleDeath();
+        }
+        else if (other.CompareTag("Collectable"))
+        {
+            Destroy(other.gameObject);
         }
     }
 
