@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 
+[RequireComponent(typeof(ScoreManager))]
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -12,7 +13,9 @@ public class GameManager : MonoBehaviour
 
     [Header("Score")]
     public TMP_Text scoreText;
+    public MultiplierUI multiplierUI;
     public int currentScore = 0;
+    public ScoreManager scoreManager;
 
     [Header("UI Panels")]
     public GameObject mainMenuUI;
@@ -39,6 +42,22 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
+        if (scoreManager == null)
+            scoreManager = GetComponent<ScoreManager>();
+
+        if (scoreManager == null)
+        {
+            Debug.LogError("GameManager requires a ScoreManager component on the same GameObject.");
+            enabled = false;
+            return;
+        }
+
+        if (multiplierUI == null && scoreManager != null)
+            multiplierUI = scoreManager.multiplierUI;
+
+        if (multiplierUI == null)
+            multiplierUI = FindFirstObjectByType<MultiplierUI>();
     }
 
     private void Start()
@@ -114,12 +133,15 @@ public class GameManager : MonoBehaviour
         if (!hasGameStarted || isGameOver) return;
         if (target == null) return;
 
-        AddScore(target.points);
+        int awarded = scoreManager != null ? scoreManager.RegisterHit(target, hitPosition) : target.points;
+        AddScore(awarded);
     }
 
     private void UpdateScoreText()
     {
-        if (scoreText != null)
+        if (multiplierUI != null)
+            multiplierUI.SetScore(currentScore);
+        else if (scoreText != null)
             scoreText.text = "Score: " + currentScore;
     }
 

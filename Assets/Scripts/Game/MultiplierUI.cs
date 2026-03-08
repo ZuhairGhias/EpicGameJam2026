@@ -7,6 +7,7 @@ public class MultiplierUI : MonoBehaviour
     [Header("UI")]
     public Slider heatBar;
     public TMP_Text multiplierText;
+    public TMP_Text scoreText;
 
     [Header("Animation")]
     public float punchScale = 1.25f;
@@ -75,6 +76,12 @@ public class MultiplierUI : MonoBehaviour
 
             lastMultiplier = multiplier;
         }
+    }
+
+    public void SetScore(int score)
+    {
+        if (scoreText != null)
+            scoreText.text = $"Score: {score}";
     }
 
     void OnLevelUp()
