@@ -15002,6 +15002,67 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7008190728376324956, guid: 40f880163bdc5bc48964817bd85cd672, type: 3}
   m_PrefabInstance: {fileID: 1492399686}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1493702665
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1857886736775534575, guid: 17164911c2f382848b68c6dd3f693b31, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -5.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1857886736775534575, guid: 17164911c2f382848b68c6dd3f693b31, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 1857886736775534575, guid: 17164911c2f382848b68c6dd3f693b31, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 38.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 1857886736775534575, guid: 17164911c2f382848b68c6dd3f693b31, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1857886736775534575, guid: 17164911c2f382848b68c6dd3f693b31, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1857886736775534575, guid: 17164911c2f382848b68c6dd3f693b31, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1857886736775534575, guid: 17164911c2f382848b68c6dd3f693b31, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1857886736775534575, guid: 17164911c2f382848b68c6dd3f693b31, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1857886736775534575, guid: 17164911c2f382848b68c6dd3f693b31, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1857886736775534575, guid: 17164911c2f382848b68c6dd3f693b31, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7543604693364669418, guid: 17164911c2f382848b68c6dd3f693b31, type: 3}
+      propertyPath: m_Name
+      value: TargetProjector
+      objectReference: {fileID: 0}
+    - target: {fileID: 7543604693364669418, guid: 17164911c2f382848b68c6dd3f693b31, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 17164911c2f382848b68c6dd3f693b31, type: 3}
 --- !u!1001 &1503973725
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17444,6 +17505,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: StartGame
       objectReference: {fileID: 0}
+    - target: {fileID: 770511775371715128, guid: 5b09ca4cdbe6bb3408548c047c7c8fcb, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 960704982272425145, guid: 5b09ca4cdbe6bb3408548c047c7c8fcb, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1739050013859022111, guid: 5b09ca4cdbe6bb3408548c047c7c8fcb, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -17451,6 +17520,10 @@ PrefabInstance:
     - target: {fileID: 1739050013859022111, guid: 5b09ca4cdbe6bb3408548c047c7c8fcb, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: RestartGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897187835223422024, guid: 5b09ca4cdbe6bb3408548c047c7c8fcb, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4417948602428921293, guid: 5b09ca4cdbe6bb3408548c047c7c8fcb, type: 3}
       propertyPath: m_AnchorMax.y
@@ -17538,6 +17611,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6539404163036252159, guid: 5b09ca4cdbe6bb3408548c047c7c8fcb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8337957937058635778, guid: 5b09ca4cdbe6bb3408548c047c7c8fcb, type: 3}
+      propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -22023,3 +22100,4 @@ SceneRoots:
   - {fileID: 1703617829}
   - {fileID: 890046342}
   - {fileID: 2052285253}
+  - {fileID: 1493702665}
