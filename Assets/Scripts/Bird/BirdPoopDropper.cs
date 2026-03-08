@@ -10,8 +10,9 @@ public class BirdPoopDropper : MonoBehaviour
     public AudioClip dropSfx;
 
     [Header("Trajectory / Feel")]
-    public float extraDownSpeed = 0f;     // laxatives can raise this (e.g. 8�15)
+    public float extraDownSpeed = 0f;     // laxatives can raise this (e.g. 8-15)
     public float inheritMultiplier = 1f;  // 1 = full inherit
+    public float dropCooldownSeconds = 0.5f;
     public int segments = 25;
     public float timeStep = 0.06f;
 
@@ -21,6 +22,7 @@ public class BirdPoopDropper : MonoBehaviour
     private BirdGlideController bird;
     private Collider[] playerColliders;
     private AudioSource dropAudioSource;
+    private float nextAllowedDropTime;
 
     void Awake()
     {
@@ -41,7 +43,7 @@ public class BirdPoopDropper : MonoBehaviour
         if (line != null)
             DrawTrajectory();
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && Time.time >= nextAllowedDropTime)
             Drop();
     }
 
@@ -56,6 +58,7 @@ public class BirdPoopDropper : MonoBehaviour
     void Drop()
     {
         if (poopPrefab == null || spawnPoint == null) return;
+        nextAllowedDropTime = Time.time + dropCooldownSeconds;
 
         Rigidbody rb = Instantiate(poopPrefab, spawnPoint.position, Quaternion.identity);
 
@@ -114,3 +117,4 @@ public class BirdPoopDropper : MonoBehaviour
         }
     }
 }
+
