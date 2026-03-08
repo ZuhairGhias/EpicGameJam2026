@@ -28,6 +28,13 @@ public class ScoreManager : MonoBehaviour
     {
         if (multiplierUI == null)
             multiplierUI = FindFirstObjectByType<MultiplierUI>();
+
+        if (multiplierUI == null)
+        {
+            Debug.LogError("ScoreManager: Could not find MultiplierUI in the scene. Disabling ScoreManager.", this);
+            enabled = false;
+            return;
+        }
     }
 
     void Start()

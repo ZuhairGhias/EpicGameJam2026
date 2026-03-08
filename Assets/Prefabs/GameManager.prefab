@@ -66,8 +66,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScoreManager
   maxHeat: 50
-  heatPerPoint: 1
-  heatDecayPerSecond: 0.5
+  heatPerPoint: 2.5
+  heatDecayPerSecond: 0.1
   maxMultiplier: 5
   heatPerLevel: 10
   multiplierUI: {fileID: 0}

@@ -8,6 +8,7 @@ public class PoopProjectile : MonoBehaviour
     [Header("Audio")]
     public AudioClip targetHitSfx;
     [Range(0f, 1f)] public float targetHitSfxVolume = 1f;
+    [Range(1, 4)] public int targetHitSfxLayers = 1;
 
     [Header("Impact FX")]
     public GameObject splatterDecalPrefab;
@@ -86,6 +87,9 @@ public class PoopProjectile : MonoBehaviour
     void PlayTargetHitSfx(Vector3 worldPoint)
     {
         if (targetHitSfx != null && targetHitSfxVolume > 0f)
-            AudioSource.PlayClipAtPoint(targetHitSfx, worldPoint, targetHitSfxVolume);
+        {
+            for (int i = 0; i < targetHitSfxLayers; i++)
+                AudioSource.PlayClipAtPoint(targetHitSfx, worldPoint, targetHitSfxVolume);
+        }
     }
 }
